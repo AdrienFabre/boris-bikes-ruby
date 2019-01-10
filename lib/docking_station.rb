@@ -4,6 +4,10 @@ class DockingStation
 
 attr_reader :bike
 
+  def initialize
+    @capacity = 10
+  end
+
   def release_bike
     raise Exception.new("no bike available") unless @bike
     @bike
@@ -16,7 +20,7 @@ attr_reader :bike
   end
 
   def dock(bike)
-    @bike = bike
+   raise Exception.new("dock full") unless @capacity < 10
   end
 
 
