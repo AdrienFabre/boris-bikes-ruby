@@ -18,7 +18,7 @@ describe DockingStation do
   # test that the method dock is called with one argument.
   it { is_expected.to respond_to(:dock).with(1).argument }
   # test that the method bike exist.
-  it { is_expected.to respond_to(:docked_bikes)}
+  it { is_expected.to respond_to(:bikes)}
   # test that when we dock a bike, the bike is returned
   it ' dock something' do
     bike = Bike.new
@@ -29,11 +29,18 @@ describe DockingStation do
     capacity.times{subject.dock(Bike.new)}
     expect { subject.dock(Bike.new) }.to raise_error("dock full")
   end
-  it 'gives the number of bikes' do
-    is_expected.to respond_to(:docked_bikes)
-  end
+
   it 'gives an array of bikes' do
-    expect(subject.docked_bikes).to be_a(Array)
+    expect(subject.bikes).to be_a(Array)
   end
 
+  it 'set a different bike capacity ' do
+    subject = DockingStation.new(5)
+    expect(subject.instance_variable_get(:@capacity)).to eq(5)
+  end
+
+  it 'set a default bike capacity' do
+    subject = DockingStation.new
+    expect(subject.instance_variable_get(:@capacity)).to eq DockingStation::DEFAULT_CAPACITY 
+  end
 end
